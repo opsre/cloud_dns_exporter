@@ -78,6 +78,7 @@ docker-compose up -d
 
 | 名称               | 说明                 |
 | ------------------ | -------------------- |
+| `build_info`       | 构建信息             |
 | `domain_list`      | 域名列表             |
 | `record_list`      | 域名解析记录列表     |
 | `record_cert_info` | 解析记录证书信息列表 |
@@ -85,6 +86,13 @@ docker-compose up -d
 指标标签说明：
 
 ```
+<!-- 构建信息 -->
+build_info{
+    version="版本号",
+    git_commit="git提交号",
+    go_version="go版本",
+    os_arch="系统架构",
+    build_time="构建时间"} 1
 <!-- 域名列表 -->
 domain_list{
     cloud_provider="DNS提供商",

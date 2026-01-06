@@ -76,6 +76,7 @@ The indicators provided by this project include the following:
 
 | NAME               | Description                 |
 | ------------------ | -------------------- |
+| `build_info`       | Build Information             |
 | `domain_list`      | Domain Name List             |
 | `record_list`      | Domain name resolution record list     |
 | `record_cert_info` | Parse record certificate information list |
@@ -83,6 +84,13 @@ The indicators provided by this project include the following:
 Indicator label description：
 
 ```
+<!-- Build Information -->
+build_info{
+    version="version number",
+    git_commit="git commit number",
+    go_version="go version",
+    os_arch="system architecture",
+    build_time="build time"} 1
 <!-- Domain Name List -->
 domain_list{
     cloud_provider="DNS Provider",
