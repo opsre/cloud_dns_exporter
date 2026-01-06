@@ -14,13 +14,13 @@ import (
 
 // 指标结构体
 type Metrics struct {
-	metrics    map[string]*prometheus.Desc
-	mutex      sync.Mutex
-	version    string
-	gitCommit  string
-	goVersion  string
-	osArch     string
-	buildTime  string
+	metrics   map[string]*prometheus.Desc
+	mutex     sync.Mutex
+	version   string
+	gitCommit string
+	goVersion string
+	osArch    string
+	buildTime string
 }
 
 // newGlobalMetric 创建指标描述符
