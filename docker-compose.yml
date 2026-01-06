@@ -1,4 +1,3 @@
-version: '3'
 services:
   cloud_dns_exporter:
     image: registry.cn-hangzhou.aliyuncs.com/eryajf/cloud_dns_exporter:latest
@@ -10,28 +9,29 @@ services:
         target: /app/config.yaml
     environment:
       - TZ=Asia/Shanghai
-  grafana:
-    image: bitnami/grafana:11.2.0
-    container_name: grafana
-    environment:
-      - GF_SECURITY_ADMIN_PASSWORD=admin  #设置admin用户默认密码
-      - TZ=Asia/Shanghai
-    ports:
-      - "3000:3000"
-    volumes:
-      - grafana_data:/opt/bitnami/grafana/data
-  prometheus:
-    image: bitnami/prometheus:2.54.1
-    container_name: prometheus
-    environment:
-      - TZ=Asia/Shanghai
-    ports:
-      - "9090:9090"
-    configs:
-      - source: prometheus_config
-        target: /opt/bitnami/prometheus/conf/prometheus.yml
-    volumes:
-      - prometheus_data:/opt/bitnami/prometheus/data
+  # 以下为可选监控组件，如需使用请取消注释
+  # grafana:
+  #   image: bitnami/grafana:11.2.0
+  #   container_name: grafana
+  #   environment:
+  #     - GF_SECURITY_ADMIN_PASSWORD=admin  #设置admin用户默认密码
+  #     - TZ=Asia/Shanghai
+  #   ports:
+  #     - "3000:3000"
+  #   volumes:
+  #     - grafana_data:/opt/bitnami/grafana/data
+  # prometheus:
+  #   image: bitnami/prometheus:2.54.1
+  #   container_name: prometheus
+  #   environment:
+  #     - TZ=Asia/Shanghai
+  #   ports:
+  #     - "9090:9090"
+  #   configs:
+  #     - source: prometheus_config
+  #       target: /opt/bitnami/prometheus/conf/prometheus.yml
+  #   volumes:
+  #     - prometheus_data:/opt/bitnami/prometheus/data
 
 # 示例配置
 configs:
