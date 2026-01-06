@@ -14,8 +14,13 @@ import (
 
 // 指标结构体
 type Metrics struct {
-	metrics map[string]*prometheus.Desc
-	mutex   sync.Mutex
+	metrics    map[string]*prometheus.Desc
+	mutex      sync.Mutex
+	version    string
+	gitCommit  string
+	goVersion  string
+	osArch     string
+	buildTime  string
 }
 
 // newGlobalMetric 创建指标描述符
@@ -28,8 +33,13 @@ func newGlobalMetric(namespace string, metricName string, docString string, labe
 }
 
 // NewMetrics 初始化指标信息，即Metrics结构体
-func NewMetrics(namespace string) *Metrics {
+func NewMetrics(namespace, version, gitCommit, goVersion, osArch, buildTime string) *Metrics {
 	return &Metrics{
+		version:   version,
+		gitCommit: gitCommit,
+		goVersion: goVersion,
+		osArch:    osArch,
+		buildTime: buildTime,
 		metrics: map[string]*prometheus.Desc{
 			public.DomainList: newGlobalMetric(namespace,
 				public.DomainList,
@@ -81,6 +91,16 @@ func NewMetrics(namespace string) *Metrics {
 					"expiry_date",
 					"cert_matched",
 					"error_msg",
+				}),
+			public.BuildInfo: newGlobalMetric(namespace,
+				public.BuildInfo,
+				"Application build information",
+				[]string{
+					"version",
+					"git_commit",
+					"go_version",
+					"os_arch",
+					"build_time",
 				}),
 		},
 	}
@@ -178,4 +198,16 @@ func (c *Metrics) Collect(ch chan<- prometheus.Metric) {
 			ch <- prometheus.MustNewConstMetric(c.metrics[public.RecordCertInfo], prometheus.GaugeValue, float64(v.DaysUntilExpiry), v.CloudProvider, v.CloudName, v.DomainName, v.RecordID, v.FullRecord, v.SubjectCommonName, v.SubjectOrganization, v.SubjectOrganizationalUnit, v.IssuerCommonName, v.IssuerOrganization, v.IssuerOrganizationalUnit, v.CreatedDate, v.ExpiryDate, fmt.Sprintf("%t", v.CertMatched), v.ErrorMsg)
 		}
 	}
+
+	// build info metric
+	ch <- prometheus.MustNewConstMetric(
+		c.metrics[public.BuildInfo],
+		prometheus.GaugeValue,
+		1,
+		c.version,
+		c.gitCommit,
+		c.goVersion,
+		c.osArch,
+		c.buildTime,
+	)
 }

@@ -33,6 +33,7 @@ const (
 	DomainList     string = "domain_list"
 	RecordList     string = "record_list"
 	RecordCertInfo string = "record_cert_info"
+	BuildInfo      string = "build_info"
 	// Cron Config Defaults
 	DefaultDomainRecordSyncInterval = 30   // 默认域名记录同步间隔（秒）
 	DefaultCertInfoSyncInterval     = 3600 // 默认证书信息同步间隔（秒），24小时
