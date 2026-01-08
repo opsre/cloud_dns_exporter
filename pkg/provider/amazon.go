@@ -141,12 +141,12 @@ func (a *AmazonDNS) ListRecords() ([]Record, error) {
 				CloudName:     a.account.CloudName,
 				DomainName:    domain,
 				// RecordID:      public.GetID(),
-				RecordType:    string(record.Type),
-				RecordWeight:  fmt.Sprintf("%d", record.Weight),
-				RecordStatus:  oneStatus("enable"),
-				RecordRemark:  tea.StringValue(nil),
-				UpdateTime:    carbon.CreateFromTimestampMilli(tea.Int64Value(nil)).ToDateTimeString(),
-				FullRecord:    strings.TrimSuffix(tea.StringValue(record.Name), "."),
+				RecordType:   string(record.Type),
+				RecordWeight: fmt.Sprintf("%d", record.Weight),
+				RecordStatus: oneStatus("enable"),
+				RecordRemark: tea.StringValue(nil),
+				UpdateTime:   carbon.CreateFromTimestampMilli(tea.Int64Value(nil)).ToDateTimeString(),
+				FullRecord:   strings.TrimSuffix(tea.StringValue(record.Name), "."),
 			}
 			// aws域名返回完整域名处理
 			recordName := strings.TrimSuffix(tea.StringValue(record.Name), ".")

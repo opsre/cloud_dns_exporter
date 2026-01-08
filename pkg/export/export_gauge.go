@@ -177,10 +177,10 @@ func (c *Metrics) Collect(ch chan<- prometheus.Metric) {
 					continue
 				}
 				if seenIDs[v.RecordID] {
-                    logger.Error(fmt.Sprintf("【Duplicate Found】Cloud: %s, Domain: %s, RecordID: %s is duplicated!", v.CloudName, v.FullRecord, v.RecordID))
+					logger.Error(fmt.Sprintf("【Duplicate Found】Cloud: %s, Domain: %s, RecordID: %s is duplicated!", v.CloudName, v.FullRecord, v.RecordID))
 					continue
-                }
-                seenIDs[v.RecordID] = true
+				}
+				seenIDs[v.RecordID] = true
 				ch <- prometheus.MustNewConstMetric(c.metrics[public.RecordCertInfo], prometheus.GaugeValue, float64(v.DaysUntilExpiry), v.CloudProvider, v.CloudName, v.DomainName, v.RecordID, v.FullRecord, v.SubjectCommonName, v.SubjectOrganization, v.SubjectOrganizationalUnit, v.IssuerCommonName, v.IssuerOrganization, v.IssuerOrganizationalUnit, v.CreatedDate, v.ExpiryDate, fmt.Sprintf("%t", v.CertMatched), v.ErrorMsg)
 			}
 		}
